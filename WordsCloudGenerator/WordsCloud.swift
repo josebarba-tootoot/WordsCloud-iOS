@@ -22,7 +22,8 @@ class WordsCloud: UIView {
     
     // MARK: - Ivars
     private var wordsArray: [String] = ["Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other"]
-    private var colorsArray: [UIColor]!
+//    private var colorsArray: [UIColor]!
+    private var colorsArray: [UIColor]! = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1), #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.1921568662, green: 0.007843137719, blue: 0.09019608051, alpha: 1), #colorLiteral(red: 0.3176470697, green: 0.07450980693, blue: 0.02745098062, alpha: 1), #colorLiteral(red: 0.3098039329, green: 0.2039215714, blue: 0.03921568766, alpha: 1), #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1)]
     private var offset: CGFloat = 2
 
     public var sizes: [CGFloat]!
@@ -64,8 +65,8 @@ class WordsCloud: UIView {
                 size = CGFloat.random(in: minimumFontSize..<maximumFontSize)
             }
             
-            if let colors = colorsArray, colors.count < index - 1 {
-                color = colors[index]
+            if let colors = colorsArray {
+                color = colors[Int.random(in: 0..<colors.count)]
             }
             
             let button = generateButton(fontSize: size, title: word, tag: index, color: color)
@@ -118,10 +119,20 @@ class WordsCloud: UIView {
 
             let nextTag = index <= buttons.count - 2 ? buttons[index + 1] : buttons[index]
             let nextTagWidth = nextTag.frame.width + offset
-
+            
+            // Next button wont fit in the row
             if x + nextTagWidth > frame.width {
+                // Center the buttons
+                let rightGap = frame.width - x + button.frame.size.width
+                for view in subviews {
+                    if view.frame.origin.y == y {
+                        view.frame = CGRect(x: view.frame.origin.x + rightGap / 2, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
+                    }
+                }
+                // Move y to a next row
                 x = offset
                 y += button.frame.height + offset
+                
             }
             
             // Check if intersecs other view
@@ -219,7 +230,6 @@ class WordsCloud: UIView {
     "BodoniSvtyTwoOSITCTT-Book",
     "BodoniSvtyTwoOSITCTT-BookIt",
     "BodoniSvtyTwoSCITCTT-Book",
-    "BodoniOrnamentsITCTT",
     "BradleyHandITCTT-Bold",
     "ChalkboardSE-Bold",
     "ChalkboardSE-Light",
