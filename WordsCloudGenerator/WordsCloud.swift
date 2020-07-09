@@ -122,24 +122,9 @@ class WordsCloud: UIView {
             
             // Next button wont fit in the row
             if x + nextTagWidth > frame.width {
-                // Center the buttons
-                let rightGap = frame.width - x + button.frame.size.width
-                for view in subviews {
-                    if view.frame.origin.y == y {
-                        view.frame = CGRect(x: view.frame.origin.x + rightGap / 2, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
-                    }
-                }
                 // Move y to a next row
                 x = offset
                 y += button.frame.height + offset
-                
-            }
-            
-            // Check if intersecs other view
-            for view in subviews {
-                if view.frame.intersects(button.frame) {
-                    button.frame = CGRect(x: button.frame.origin.x, y: view.frame.height + view.frame.origin.y + offset, width: button.frame.size.width, height: button.frame.height)
-                }
             }
             
             // Don't add buttons outside the view area
@@ -152,7 +137,7 @@ class WordsCloud: UIView {
     }
     
     
-    
+    /// Fonts constant
     fileprivate let fonts = [
     "AcademyEngravedLetPlain",
     "AlNile",
