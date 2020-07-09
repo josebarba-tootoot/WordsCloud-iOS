@@ -13,6 +13,7 @@
 		DEC1DA9D24B70B2600A59196 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEC1DA9B24B70B2600A59196 /* Main.storyboard */; };
 		DEC1DA9F24B70B2700A59196 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEC1DA9E24B70B2700A59196 /* Assets.xcassets */; };
 		DEC1DAA224B70B2700A59196 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEC1DAA024B70B2700A59196 /* LaunchScreen.storyboard */; };
+		DEC1DAAA24B70B6400A59196 /* WordsCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC1DAA924B70B6400A59196 /* WordsCloud.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,8 @@
 		DEC1DA9E24B70B2700A59196 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEC1DAA124B70B2700A59196 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEC1DAA324B70B2700A59196 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DEC1DAA924B70B6400A59196 /* WordsCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsCloud.swift; sourceTree = "<group>"; };
+		DEC1DAAB24B7231B00A59196 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ../../MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,9 +59,11 @@
 		DEC1DA9424B70B2600A59196 /* WordsCloudGenerator */ = {
 			isa = PBXGroup;
 			children = (
+				DEC1DAAB24B7231B00A59196 /* MyPlayground.playground */,
 				DEC1DA9524B70B2600A59196 /* AppDelegate.swift */,
 				DEC1DA9724B70B2600A59196 /* SceneDelegate.swift */,
 				DEC1DA9924B70B2600A59196 /* ViewController.swift */,
+				DEC1DAA924B70B6400A59196 /* WordsCloud.swift */,
 				DEC1DA9B24B70B2600A59196 /* Main.storyboard */,
 				DEC1DA9E24B70B2700A59196 /* Assets.xcassets */,
 				DEC1DAA024B70B2700A59196 /* LaunchScreen.storyboard */,
@@ -139,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEC1DA9A24B70B2600A59196 /* ViewController.swift in Sources */,
+				DEC1DAAA24B70B6400A59196 /* WordsCloud.swift in Sources */,
 				DEC1DA9624B70B2600A59196 /* AppDelegate.swift in Sources */,
 				DEC1DA9824B70B2600A59196 /* SceneDelegate.swift in Sources */,
 			);
