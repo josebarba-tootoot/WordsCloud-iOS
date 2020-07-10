@@ -20,6 +20,7 @@ protocol WordsCloudDelegate {
 
 class WordsCloud: UIView {
     
+    
     // MARK: - Ivars
     private var wordsArray: [String] = ["Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other"]
 //    private var colorsArray: [UIColor]!
@@ -28,6 +29,9 @@ class WordsCloud: UIView {
 
     public var sizes: [CGFloat]!
     public var delegate: WordsCloudDelegate!
+    
+    private var minimumFontSize: CGFloat = 10
+    private var maximumFontSize: CGFloat = 35
     
     // MARK: - Public functions
     public func create(words: [String]?, frame: CGRect) {
@@ -48,10 +52,6 @@ class WordsCloud: UIView {
     
     /// Will start the cloud generation
     fileprivate func generateButtons() {
-        // Maximum and minimum font size
-        let minimumFontSize: CGFloat = 10
-        let maximumFontSize: CGFloat = CGFloat(min(frame.size.width, 35))
-        
         var arrayOfButtons: [UIButton] = []
         for (index, word) in wordsArray.enumerated() {
             // Default size and color
@@ -129,11 +129,26 @@ class WordsCloud: UIView {
             
             // Don't add buttons outside the view area
             if button.frame.origin.y + button.frame.height - offset > self.frame.size.height {
-                continue
+                tryAgain()
+                return
             }
             
             addSubview(button)
         }
+    }
+    
+    
+    /// If all the buttons don't fit in the view area, reduce the maximum font size and try again
+    /// maybe not the best approach, but simple and it works
+    fileprivate func tryAgain() {
+        // If the maximum font size reaches this value then don't reduce it more
+        if maximumFontSize == 16 { return }
+        // Remove all subviews
+        subviews.forEach({$0.removeFromSuperview()})
+        // Reduce font size
+        maximumFontSize -= 1
+        // Try again
+        generateButtons()
     }
     
     
