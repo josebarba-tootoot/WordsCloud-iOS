@@ -20,12 +20,11 @@ protocol WordsCloudDelegate {
 
 class WordsCloud: UIView {
     
-    
     // MARK: - Ivars
     private var wordsArray: [String] = ["Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other", "Freedom", "God", "Happiness", "Imagination", "Intelligence", "Other"]
 //    private var colorsArray: [UIColor]!
     private var colorsArray: [UIColor]! = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1), #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.1921568662, green: 0.007843137719, blue: 0.09019608051, alpha: 1), #colorLiteral(red: 0.3176470697, green: 0.07450980693, blue: 0.02745098062, alpha: 1), #colorLiteral(red: 0.3098039329, green: 0.2039215714, blue: 0.03921568766, alpha: 1), #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1)]
-    private var offset: CGFloat = 2
+    private var offset: CGFloat = 3
 
     public var sizes: [CGFloat]!
     public var delegate: WordsCloudDelegate!
@@ -49,7 +48,6 @@ class WordsCloud: UIView {
     }
     
     // MARK: - Private functions
-    
     /// Will start the cloud generation
     fileprivate func generateButtons() {
         var arrayOfButtons: [UIButton] = []
@@ -76,14 +74,13 @@ class WordsCloud: UIView {
         generateCloud(arrayOfButtons)
     }
     
-    
     /// To create the button will be used as a tag
     /// - Parameters:
     ///   - fontSize: the font size for the titleLabel
     ///   - title: the string for the title
     ///   - tag: the tag based on the index of the array of Strings passed to this class
     ///   - color: The color if want to use a different one than the black
-    /// - Returns: A buttons with all the properties
+    /// - Returns: A button with all the properties
     fileprivate func generateButton(fontSize: CGFloat = 17, title: String = "Example", tag: Int, color: UIColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)) -> UIButton {
         // Prepare the attributes
         let fontName = fonts[Int.random(in: 0..<fonts.count)]
@@ -107,7 +104,6 @@ class WordsCloud: UIView {
         return button
     }
     
-    
     /// Will generate the cloud of words inside the view area
     /// - Parameter buttons: the array of buttons previouly generated
     fileprivate func generateCloud(_ buttons: [UIButton]) {
@@ -115,13 +111,15 @@ class WordsCloud: UIView {
         var y = offset
         for (index, button) in buttons.enumerated() {
             button.frame = CGRect(x: x, y: y, width: button.frame.width, height: button.frame.height)
-            x += button.frame.width + offset
+            x += button.frame.width
 
             let nextTag = index <= buttons.count - 2 ? buttons[index + 1] : buttons[index]
-            let nextTagWidth = nextTag.frame.width + offset
+            let nextTagWidth = nextTag.frame.width
             
             // Next button wont fit in the row
-            if x + nextTagWidth > frame.width {
+            let next = x + nextTagWidth > frame.width
+            if  next {
+                centerRow(button, x)
                 // Move y to a next row
                 x = offset
                 y += button.frame.height + offset
@@ -137,6 +135,20 @@ class WordsCloud: UIView {
         }
     }
     
+    /// By default the row of tags is left aligned, make it centered
+    /// - Parameters:
+    ///   - button: the last button of the row, not added yet to the subviews
+    ///   - x: the origin of the button plush the width
+    fileprivate func centerRow(_ button: UIButton, _ x: CGFloat) {
+        var row = subviews.filter({$0.frame.origin.y == button.frame.origin.y})
+        if !row.contains(button) { row.append(button) }
+        let width = frame.size.width
+        let gap = width - x
+        let space = CGFloat(gap) / CGFloat(row.count)
+        for view in row {
+            view.frame = CGRect(x: view.frame.origin.x + space, y: view.frame.origin.y, width: view.frame.size.width, height: view.frame.size.height)
+        }
+    }
     
     /// If all the buttons don't fit in the view area, reduce the maximum font size and try again
     /// maybe not the best approach, but simple and it works
