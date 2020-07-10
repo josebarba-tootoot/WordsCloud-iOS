@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var wordsCloud: WordsCloud!
+    @IBOutlet weak var viewContainer: WordsCloud!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,15 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        wordsCloud.create(words: nil, frame: wordsCloud.frame)
+        viewContainer.create(words: nil, frame: viewContainer.frame)
+        viewContainer.delegate = self
+        
+    }
+}
+
+extension ViewController: WordsCloudDelegate {
+    func didTap(onWord word: String, index: Int) {
+        // Do something
     }
 }
 
