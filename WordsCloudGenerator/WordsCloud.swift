@@ -109,6 +109,7 @@ class WordsCloud: UIView {
     fileprivate func generateCloud(_ buttons: [UIButton]) {
         var x = offset
         var y = offset
+        var maxLineHeight: CGFloat = 0 // To fined the highest button in a row
         for (index, button) in buttons.enumerated() {
             button.frame = CGRect(x: x, y: y, width: button.frame.width, height: button.frame.height)
             x += button.frame.width
@@ -122,7 +123,9 @@ class WordsCloud: UIView {
                 centerRow(button, x)
                 // Move y to a next row
                 x = offset
-                y += button.frame.height + offset
+                y += maxLineHeight + offset
+                // Reset the value for the next line
+                maxLineHeight = 0
             }
             
             // Don't add buttons outside the view area
@@ -132,6 +135,10 @@ class WordsCloud: UIView {
             }
             
             addSubview(button)
+            // Check if this button is the highest one
+            if button.frame.size.height > maxLineHeight {
+                maxLineHeight = button.frame.size.height
+            }
         }
     }
     
