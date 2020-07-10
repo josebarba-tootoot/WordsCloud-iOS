@@ -29,6 +29,7 @@ func didTap(onWord word: String, index: Int) {
     }
 ```
 
+![](screenshot-001.png)
 
 ## Authors
 
